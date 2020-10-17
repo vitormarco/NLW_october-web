@@ -4,7 +4,7 @@ import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 
 
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiX } from "react-icons/fi";
 
 import '../styles/pages/create-orphanage.css';
 import Sidebar from "../components/Sidebar";
@@ -12,7 +12,7 @@ import mapIcon from "../utils/mapIcon";
 import api from "../services/api";
 
 export default function CreateOrphanage() {
-  const history = useHistory()
+  const history = useHistory();
 
   const [ form, setForm ] = useState(
     {
@@ -89,6 +89,16 @@ export default function CreateOrphanage() {
     setPreviewImages(selectedImagesPreview);
   }
 
+  const handlerDeleteImageSelected = (index:number) => {
+    const newPreview = [...previewImages];
+    const newImages = [...images];
+    newImages.splice(index, 1);
+    newPreview.splice(index, 1);
+
+    setImages(newImages);
+    setPreviewImages(newPreview);
+  }
+
   return (
     <div id="page-create-orphanage">
       <Sidebar />
@@ -134,9 +144,12 @@ export default function CreateOrphanage() {
               <label htmlFor="images">Fotos</label>
 
               <div className="images-container">
-                {previewImages.map(image => {
+                {previewImages.map((image, index) => {
                   return (
-                    <img key={image} src={image} alt={form.name} />
+                    <div key={image}>
+                      <FiX size={40} color="#FF669D"  className="close-icon" onClick={() => handlerDeleteImageSelected(index)}/>
+                      <img src={image} alt={form.name} />
+                    </div>
                   )
                 })}
 
