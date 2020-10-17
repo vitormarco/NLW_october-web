@@ -21,8 +21,6 @@ function OrphanagesMap() {
 
   const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
 
-  console.log(orphanages);
-
   const getOrphanages = useCallback(async () => {
     try {
       const { data } = await api.get('/orphanages');
@@ -34,7 +32,7 @@ function OrphanagesMap() {
 
   useEffect(() => {
     getOrphanages()
-  }, [getOrphanages])
+  }, [getOrphanages]);
 
   return (
     <div id="page-map">
